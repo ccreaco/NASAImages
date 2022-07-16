@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ccreaco/AndroidStudioProjects/FinalProject/app/src/main/res/drawable/nasa_logo.xml" value="0.2535" />
-        <entry key="..\:/Users/ccreaco/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/ccreaco/AndroidStudioProjects/FinalProject/app/src/main/res/layout/about.xml" value="0.14437689969604864" />
+        <entry key="..\:/Users/ccreaco/AndroidStudioProjects/FinalProject/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/ccreaco/AndroidStudioProjects/FinalProject/app/src/main/res/layout/images.xml" value="0.17857142857142858" />
         <entry key="..\:/Users/ccreaco/AndroidStudioProjects/FinalProject/app/src/main/res/menu/navbar_menu.xml" value="0.1" />
         <entry key="..\:/Users/ccreaco/AndroidStudioProjects/FinalProject/app/src/main/res/menu/toolbar_menu.xml" value="0.1" />
       </map>

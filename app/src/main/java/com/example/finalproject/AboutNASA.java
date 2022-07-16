@@ -6,16 +6,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AboutNASA extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar tBar;
     private DrawerLayout drawer;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_about);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -81,12 +82,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId())
         {
             case R.id.home:
+                Intent nextPage = new Intent(this, MainActivity.class);
                 message = "Home";
+                startActivity(nextPage);
                 break;
             case R.id.about:
-                Intent nextPage = new Intent(this, AboutNASA.class);
                 message = "About NASA";
-                startActivity(nextPage);
                 break;
             case R.id.image:
                 Intent images = new Intent(this, Images.class);
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-        Toast.makeText(this,  message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         return false;
     }
 }

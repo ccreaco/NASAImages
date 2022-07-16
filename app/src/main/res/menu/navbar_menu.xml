@@ -9,9 +9,14 @@
         app:showAsAction="always" />
 
 
-    <item android:id="@+id/dadjoke"
+    <item android:id="@+id/about"
         android:orderInCategory="100"
-        android:title="Dad Joke"
+        android:title="About NASA"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/image"
+        android:orderInCategory="100"
+        android:title="Images"
         app:showAsAction="always"/>
 
     <item android:id="@+id/exit"

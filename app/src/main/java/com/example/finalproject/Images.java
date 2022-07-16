@@ -6,16 +6,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Images extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar tBar;
     private DrawerLayout drawer;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_images);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -81,17 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId())
         {
             case R.id.home:
+                Intent home = new Intent(this, MainActivity.class);
                 message = "Home";
+                startActivity(home);
                 break;
             case R.id.about:
-                Intent nextPage = new Intent(this, AboutNASA.class);
+                Intent NASA = new Intent(this, AboutNASA.class);
                 message = "About NASA";
-                startActivity(nextPage);
-                break;
-            case R.id.image:
-                Intent images = new Intent(this, Images.class);
-                message = "Images";
-                startActivity(images);
+                startActivity(NASA);
                 break;
             case R.id.exit:
                 message = "Goodbye";
