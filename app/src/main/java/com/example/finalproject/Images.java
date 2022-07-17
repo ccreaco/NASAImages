@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -49,6 +50,13 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
     private static String selectedDate;
     private static Bitmap nasaPic;
     private static ImageView nasaImage;
+    private static TextView nasaTitle;
+    private static TextView nasaDate;
+    private static TextView nasaLink;
+    private static String imgDate;
+    private static String imgurl ;
+    private static String hdurl;
+    private static String title;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,9 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         setContentView(R.layout.activity_images);
 
         nasaImage = findViewById(R.id.nasaImage);
+        nasaTitle = findViewById(R.id.nasaTitle);
+        nasaDate = findViewById(R.id.nasaDate);
+        nasaLink = findViewById(R.id.nasaURL);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -69,13 +80,13 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
 
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       tBar.setNavigationIcon(R.drawable.icons8_nasa_48);
+        tBar.setNavigationIcon(R.drawable.icons8_nasa_48);
 
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
-       // NASAImages nasaImages = new NASAImages();
-       // nasaImages.execute(NASAURL + selectedDate);
+        // NASAImages nasaImages = new NASAImages();
+        // nasaImages.execute(NASAURL + selectedDate);
 
     }
 
@@ -83,7 +94,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
     public boolean onOptionsItemSelected(MenuItem item) {
         String message = null;
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
 
             case R.id.item1:
                 message = "You clicked item 1!";
@@ -112,8 +123,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
     public boolean onNavigationItemSelected(MenuItem item) {
         String message = null;
 
-        switch(item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.home:
                 Intent home = new Intent(this, MainActivity.class);
                 message = "Home";
@@ -134,7 +144,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-        Toast.makeText(this,  message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -155,8 +165,8 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-           selectedDate = year + "-" + month + "-" + day;
-           Log.d("selectedDate", selectedDate);
+            selectedDate = year + "-" + month + "-" + day;
+            Log.d("selectedDate", selectedDate);
             NASAImages nasaImages = new NASAImages();
             nasaImages.execute(NASAURL + selectedDate);
 
@@ -177,31 +187,31 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
             try {
                 nasaURL = new URL(strings[0]);
 
-            HttpURLConnection connection = (HttpURLConnection) nasaURL.openConnection();
+                HttpURLConnection connection = (HttpURLConnection) nasaURL.openConnection();
 
-            inputStream = new BufferedInputStream(connection.getInputStream());
+                inputStream = new BufferedInputStream(connection.getInputStream());
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-            StringBuilder sb = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
 
-            String line = null;
+                String line = null;
 
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
 
-            String results = sb.toString();
+                String results = sb.toString();
 
-            JSONObject img = new JSONObject(results);
+                JSONObject img = new JSONObject(results);
 
-            Log.d("object", results);
-            String imgDate = img.getString("date");
-           String imgurl = img.getString("url");
-           String hdurl = img.getString("hdurl");
-           String title = img.getString("title");
+                Log.d("object", results);
+                 imgDate = img.getString("date");
+                 imgurl = img.getString("url");
+                 hdurl = img.getString("hdurl");
+                 title = img.getString("title");
 
-           Log.d("date", imgDate);
-           Log.d("imgurl", imgurl);
+                Log.d("date", imgDate);
+                Log.d("imgurl", imgurl);
 
                 imageURL = new URL(imgurl);
 
@@ -211,7 +221,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
 
                 reader = new BufferedReader(new InputStreamReader(inputStreamPic, "UTF-8"), 8);
 
-           nasaPic = BitmapFactory.decodeStream(inputStreamPic);
+                nasaPic = BitmapFactory.decodeStream(inputStreamPic);
 
 
             } catch (Exception e) {
@@ -230,7 +240,11 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         protected void onPostExecute(Void s) {
             super.onPostExecute(s);
             nasaImage.setImageBitmap(nasaPic);
+            nasaDate.setText("Date: " + imgDate);
+            nasaTitle.setText(title);
+            nasaLink.setText("URL: " + imgurl);
+
 
         }
     }
-    }
+}
