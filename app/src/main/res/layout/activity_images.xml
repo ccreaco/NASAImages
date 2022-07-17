@@ -69,6 +69,29 @@
                 android:id="@+id/nasaURL"
                 android:textColor="@color/white"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nasaHD"
+                android:autoLink="web"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saveBtn"
+                android:id="@+id/saveBtn"
+                android:textColorHighlight="@color/dark_gray"
+                android:textColorLink="@color/gainsboro" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deleteBtn"
+                android:id="@+id/deleteBtn"
+                android:textColorHighlight="@color/dark_gray"
+                android:textColorLink="@color/gainsboro" />
+
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView

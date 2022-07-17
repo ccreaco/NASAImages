@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +32,10 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -39,9 +45,11 @@ import java.util.Calendar;
 
 public class Images extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Toolbar tBar;
-    private DrawerLayout drawer;
-    private NavigationView navView;
+    private static Toolbar tBar;
+    private static DrawerLayout drawer;
+    private static NavigationView navView;
+    private static Button saveButton;
+    private static Button deleteButton;
     private static URL nasaURL;
     private static URL imageURL;
     private static InputStream inputStream;
@@ -53,10 +61,12 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
     private static TextView nasaTitle;
     private static TextView nasaDate;
     private static TextView nasaLink;
+    private static TextView nasaHDUrl;
     private static String imgDate;
     private static String imgurl ;
     private static String hdurl;
     private static String title;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +78,9 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         nasaTitle = findViewById(R.id.nasaTitle);
         nasaDate = findViewById(R.id.nasaDate);
         nasaLink = findViewById(R.id.nasaURL);
+        nasaHDUrl = findViewById(R.id.nasaHD);
+        saveButton = findViewById(R.id.saveBtn);
+        deleteButton = findViewById(R.id.deleteBtn);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -85,8 +98,32 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
-        // NASAImages nasaImages = new NASAImages();
-        // nasaImages.execute(NASAURL + selectedDate);
+
+        saveButton.setOnClickListener(v -> {
+            try {
+                File dir = getFilesDir();
+                String fileName = title;
+                FileOutputStream fOs = openFileOutput(fileName, Context.MODE_PRIVATE);
+                nasaPic.compress(Bitmap.CompressFormat.JPEG, 80, fOs);
+                fOs.flush();
+                fOs.close();
+                Log.i("Picture", title + " has been saved.");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteButton.setOnClickListener(v -> {
+            try {
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
 
     }
 
@@ -243,6 +280,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
             nasaDate.setText("Date: " + imgDate);
             nasaTitle.setText(title);
             nasaLink.setText("URL: " + imgurl);
+            nasaHDUrl.setText("Click here to see the HD picture online: " + hdurl);
 
 
         }

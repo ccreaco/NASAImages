@@ -11,4 +11,6 @@ NASA also leads a Moon to Mars exploration approach, which includes working with
     <string name="images_title">NASA Images</string>
     <string name="images_description">Please select a date using the button below to see a picture.</string>
     <string name="date_picker">Date</string>
+    <string name="saveBtn">SAVE PICTURE</string>
+    <string name="deleteBtn">DELETE PICTURE</string>
 </resources>

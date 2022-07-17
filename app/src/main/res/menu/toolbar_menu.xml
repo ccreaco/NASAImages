@@ -4,7 +4,7 @@
 
 
     <item
-        android:id="@+id/item1"
+        android:id="@+id/savedPicturesList"
         android:orderInCategory="100"
         android:title="test"
         app:showAsAction="always" />
