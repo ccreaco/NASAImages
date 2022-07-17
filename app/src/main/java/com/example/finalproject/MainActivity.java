@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(item.getItemId()) {
 
-            case R.id.item1:
+            case R.id.savedPicturesList:
                 message = "You clicked item 1!";
                 break;
             case R.id.item2:

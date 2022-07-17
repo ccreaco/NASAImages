@@ -33,7 +33,6 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -133,7 +132,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
 
         switch (item.getItemId()) {
 
-            case R.id.item1:
+            case R.id.savedPicturesList:
                 message = "You clicked item 1!";
                 break;
             case R.id.item2:
