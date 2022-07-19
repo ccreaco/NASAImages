@@ -1,11 +1,13 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
 
@@ -48,7 +52,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
     private static DrawerLayout drawer;
     private static NavigationView navView;
     private static Button saveButton;
-    private static Button deleteButton;
+    private static ProgressBar progBar;
     private static URL nasaURL;
     private static URL imageURL;
     private static InputStream inputStream;
@@ -79,7 +83,10 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         nasaLink = findViewById(R.id.nasaURL);
         nasaHDUrl = findViewById(R.id.nasaHD);
         saveButton = findViewById(R.id.saveBtn);
-        deleteButton = findViewById(R.id.deleteBtn);
+        progBar = findViewById(R.id.progressBar);
+
+        progBar.getProgressDrawable().setColorFilter(
+                Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -104,23 +111,14 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
                 String fileName = title;
                 FileOutputStream fOs = openFileOutput(fileName, Context.MODE_PRIVATE);
                 nasaPic.compress(Bitmap.CompressFormat.JPEG, 80, fOs);
+                Snackbar.make(v, "Picture: '" + title + "' has been saved.", Snackbar.LENGTH_LONG).show();
                 fOs.flush();
                 fOs.close();
-                Log.i("Picture", title + " has been saved.");
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
-        deleteButton.setOnClickListener(v -> {
-            try {
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
 
 
 
@@ -133,10 +131,19 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         switch (item.getItemId()) {
 
             case R.id.savedPicturesList:
-                message = "You clicked item 1!";
+                Intent home = new Intent(this, ImageStorage.class);
+                message = "Downloaded NASA images..";
+                startActivity(home);
                 break;
-            case R.id.item2:
-                message = "You clicked item 2!";
+            case R.id.help:
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("HELP")
+                        .setMessage("In order to select a picture, please click the date button and click the desired date. The picture and it's details will populate. If you'd like to save a copy of this picture, please select the 'Save Picture' button. To view saved pictures, click the downloaded folder in the top right next to the HELP icon.")
+                        .create()
+                        .show();
+
+                message = "HELP is coming...";
                 break;
         }
 
@@ -268,8 +275,8 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-
             super.onProgressUpdate(values);
+            progBar.setProgress(values[0]);
         }
 
         @Override
@@ -280,8 +287,6 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
             nasaTitle.setText(title);
             nasaLink.setText("URL: " + imgurl);
             nasaHDUrl.setText("Click here to see the HD picture online: " + hdurl);
-
-
         }
     }
 }

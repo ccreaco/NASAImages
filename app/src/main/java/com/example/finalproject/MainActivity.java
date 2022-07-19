@@ -52,9 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()) {
 
             case R.id.savedPicturesList:
-                message = "You clicked item 1!";
+                Intent home = new Intent(this, ImageStorage.class);
+                message = "Downloaded NASA images..";
+                startActivity(home);
                 break;
-            case R.id.item2:
+            case R.id.help:
                 message = "You clicked item 2!";
                 break;
         }

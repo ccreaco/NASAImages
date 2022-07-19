@@ -46,6 +46,13 @@
                 android:textColorHighlight="@color/dark_gray"
                 android:textColorLink="@color/gainsboro" />
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
             <ImageView
                 android:id="@+id/nasaImage"
                 android:layout_width="wrap_content"
@@ -84,13 +91,6 @@
                 android:textColorHighlight="@color/dark_gray"
                 android:textColorLink="@color/gainsboro" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/deleteBtn"
-                android:id="@+id/deleteBtn"
-                android:textColorHighlight="@color/dark_gray"
-                android:textColorLink="@color/gainsboro" />
 
         </LinearLayout>
 

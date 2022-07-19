@@ -6,12 +6,14 @@
     <item
         android:id="@+id/savedPicturesList"
         android:orderInCategory="100"
-        android:title="test"
+        android:icon="@drawable/pictures_16"
+        android:title="downloaded"
         app:showAsAction="always" />
 
 
-    <item android:id="@+id/item2"
-        android:title="test"
+    <item android:id="@+id/help"
+        android:title="help"
+        android:icon="@drawable/help_16__1_"
         android:orderInCategory="100"
         app:showAsAction="always"/>
 

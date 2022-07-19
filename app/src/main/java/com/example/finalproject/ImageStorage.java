@@ -1,10 +1,12 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -43,6 +45,8 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+
+
     }
 
     @Override
@@ -52,10 +56,17 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()) {
 
             case R.id.savedPicturesList:
-                message = "You clicked item 1!";
+                Intent home = new Intent(this, ImageStorage.class);
+                message = "Downloaded NASA images..";
+                startActivity(home);
                 break;
-            case R.id.item2:
-                message = "You clicked item 2!";
+            case R.id.help:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("HELP")
+                        .setMessage("The list below are the downloaded pictures. If you'd like to delete a picture, please select the file from the list and click delete. ")
+                        .create()
+                        .show();
+                message = "HELP is coming...";
                 break;
         }
 
@@ -108,4 +119,6 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
         Toast.makeText(this,  message, Toast.LENGTH_SHORT).show();
         return false;
     }
+
+
 }

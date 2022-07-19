@@ -13,4 +13,6 @@ NASA also leads a Moon to Mars exploration approach, which includes working with
     <string name="date_picker">Date</string>
     <string name="saveBtn">SAVE PICTURE</string>
     <string name="deleteBtn">DELETE PICTURE</string>
+    <string name="images_downloaded_title">Downloaded Files</string>
+
 </resources>
