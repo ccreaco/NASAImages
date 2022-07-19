@@ -46,7 +46,6 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
         navView.setNavigationItemSelectedListener(this);
 
 
-
     }
 
     @Override
