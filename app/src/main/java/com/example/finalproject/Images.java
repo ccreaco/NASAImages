@@ -71,8 +71,6 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
     private static String hdurl;
     private static String title;
 
-
-
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -105,7 +103,6 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
-
         saveButton.setOnClickListener(v -> {
             try {
                 File dir = getFilesDir();
@@ -119,10 +116,6 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
                 e.printStackTrace();
             }
         });
-
-
-
-
     }
 
     @Override

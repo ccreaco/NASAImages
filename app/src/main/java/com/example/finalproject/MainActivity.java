@@ -1,11 +1,19 @@
 package com.example.finalproject;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -21,12 +29,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar tBar;
     private DrawerLayout drawer;
     private NavigationView navView;
+    private EditText name;
+    private Button addBtn;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
 
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        name = findViewById(R.id.editText);
+        addBtn = findViewById(R.id.addBtn);
+
+        name.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -39,11 +56,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       tBar.setNavigationIcon(R.drawable.icons8_nasa_48);
+        tBar.setNavigationIcon(R.drawable.icons8_nasa_48);
 
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+        prefs = getSharedPreferences("Username", Context.MODE_PRIVATE);
+
+        addBtn.setOnClickListener(v -> {
+
+            String nameStr = name.getText().toString();
+            editor = prefs.edit();
+            editor.putString("name", nameStr);
+            editor.commit();
+            Toast.makeText(this, "Welcome " + nameStr + "!", Toast.LENGTH_SHORT).show();
+
+        });
     }
 
     @Override

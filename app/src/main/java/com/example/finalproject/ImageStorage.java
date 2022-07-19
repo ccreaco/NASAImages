@@ -1,13 +1,21 @@
 package com.example.finalproject;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -17,9 +25,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
+
 
 public class ImageStorage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private TextView textview;
     private Toolbar tBar;
     private DrawerLayout drawer;
     private NavigationView navView;
@@ -30,6 +41,12 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_storage);
+
+        textview = findViewById(R.id.textViewName);
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("Username", Context.MODE_PRIVATE);
+        String name = sp.getString("name", "");
+        textview.setText(name + "'s downloaded pictures");
+        Log.d("name", name);
 
         listView = findViewById(R.id.savedPicturesList);
 
@@ -49,6 +66,18 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+
+        File dir = getFilesDir();
+        File[] fileList = dir.listFiles();
+        String[] getFiles = new String[fileList().length];
+        for (int i = 0; i < getFiles.length; i++) {
+            getFiles[i] = fileList[i].getName();
+            Log.d("Files", fileList[i].getName());
+
+        }
+
+      //  ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getFiles);
+      //  listView.setAdapter(adapter);
     }
 
     @Override
