@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -83,10 +84,10 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         nasaLink = findViewById(R.id.nasaURL);
         nasaHDUrl = findViewById(R.id.nasaHD);
         saveButton = findViewById(R.id.saveBtn);
-        progBar = findViewById(R.id.progressBar);
 
-        progBar.getProgressDrawable().setColorFilter(
-                Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
+        progBar = findViewById(R.id.progressBar);
+       progBar.getProgressDrawable().setColorFilter(
+              Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -266,6 +267,14 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
 
                 nasaPic = BitmapFactory.decodeStream(inputStreamPic);
 
+                for (int i = 0; i < 100; i++) {
+                    try {
+                        publishProgress(i);
+                        Thread.sleep(10);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -277,6 +286,8 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             progBar.setProgress(values[0]);
+
+
         }
 
         @Override

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -22,12 +23,15 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
     private Toolbar tBar;
     private DrawerLayout drawer;
     private NavigationView navView;
+    private ListView listView;
 
 
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_storage);
+
+        listView = findViewById(R.id.savedPicturesList);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -44,7 +48,6 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
 
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-
 
     }
 

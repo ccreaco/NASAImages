@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -57,7 +58,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(home);
                 break;
             case R.id.help:
-                message = "You clicked item 2!";
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("HELP")
+                        .setMessage("TO BE EDITED")
+                        .create()
+                        .show();
+                message = "HELP is coming...";
                 break;
         }
 

@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -58,7 +59,12 @@ public class AboutNASA extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(home);
                 break;
             case R.id.help:
-                message = "You clicked item 2!";
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("HELP")
+                        .setMessage("This is the ABOUT NASA page. To download an image, please select the NASA icon and then Images.")
+                        .create()
+                        .show();
+                message = "HELP is coming...";
                 break;
         }
 
