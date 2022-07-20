@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navView;
     private EditText name;
     private Button addBtn;
+    private String nameStr;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
 
@@ -61,17 +62,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
-        prefs = getSharedPreferences("Username", Context.MODE_PRIVATE);
+        prefs = this.getSharedPreferences("Username", Context.MODE_PRIVATE);
 
         addBtn.setOnClickListener(v -> {
 
-            String nameStr = name.getText().toString();
+            nameStr = name.getText().toString();
             editor = prefs.edit();
             editor.putString("name", nameStr);
             editor.commit();
             Toast.makeText(this, "Welcome " + nameStr + "!", Toast.LENGTH_SHORT).show();
 
         });
+
+        String getName = prefs.getString("name", "");
+
+        if(getName != "") {
+            name.setText("Welcome back " + getName + "!");
+        }
+
     }
 
     @Override

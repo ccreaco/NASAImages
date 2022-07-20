@@ -1,19 +1,20 @@
 package com.example.finalproject;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
-
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ImageStorage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +39,8 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private NavigationView navView;
     private ListView listView;
+    private ImageView imageView;
+    private ArrayList<String> fileList = new ArrayList<>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +52,9 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
         SharedPreferences sp = getApplicationContext().getSharedPreferences("Username", Context.MODE_PRIVATE);
         String name = sp.getString("name", "");
         textview.setText(name + "'s downloaded pictures");
-        Log.d("name", name);
 
-        listView = findViewById(R.id.savedPicturesList);
+        listView = findViewById(R.id.image_list);
+        imageView = findViewById(R.id.image_download);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -66,19 +72,57 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+        SwipeRefreshLayout refresher = findViewById(R.id.refresher);
+        refresher.setOnRefreshListener( () -> refresher.setRefreshing(false)  );
 
         File dir = getFilesDir();
-        File[] fileList = dir.listFiles();
+        File[] files = dir.listFiles();
         String[] getFiles = new String[fileList().length];
         for (int i = 0; i < getFiles.length; i++) {
-            getFiles[i] = fileList[i].getName();
-            Log.d("Files", fileList[i].getName());
-
+            fileList.add(getFiles[i] = files[i].getName());
         }
 
-      //  ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getFiles);
-      //  listView.setAdapter(adapter);
+        ArrayAdapter<String> directoryList = new ArrayAdapter<>(this, R.layout.listview_layout, fileList);
+        listView.setAdapter(directoryList);
+
+
+        listView.setOnItemClickListener((p, b, pos, id) -> {
+
+            String n = fileList.get(pos);
+            File imgFile = new File(dir, n);
+
+            try {
+                FileInputStream input = new FileInputStream(imgFile);
+                Bitmap image = BitmapFactory.decodeStream(input);
+                imageView.setImageBitmap(image);
+                input.close();
+                Log.d("Image downloaded", "success");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        listView.setOnItemLongClickListener((p, b, pos, id) -> {
+
+            String n = fileList.get(pos);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(n)
+                    .setMessage("")
+                    .setPositiveButton("Delete", (click, arg) -> {
+
+                    })
+                    .setNegativeButton("Cancel", (click, arg) -> {
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+            return true;
+        });
+
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,7 +138,7 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
             case R.id.help:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle("HELP")
-                        .setMessage("The list below are the downloaded pictures. If you'd like to delete a picture, please select the file from the list and click delete. ")
+                        .setMessage("The list below are the downloaded pictures. Click a picture to view! A prompt will ask if you'd like to delete a picture. ")
                         .create()
                         .show();
                 message = "HELP is coming...";
@@ -152,4 +196,5 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
     }
 
 
-}
+    }
+

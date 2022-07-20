@@ -70,6 +70,9 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
     private static String imgurl ;
     private static String hdurl;
     private static String title;
+    private static String description;
+    private static String copyright;
+    private static NASAImage nasaImageInfo;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -106,7 +109,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         saveButton.setOnClickListener(v -> {
             try {
                 File dir = getFilesDir();
-                String fileName = title;
+                String fileName = title + ".jpeg";
                 FileOutputStream fOs = openFileOutput(fileName, Context.MODE_PRIVATE);
                 nasaPic.compress(Bitmap.CompressFormat.JPEG, 80, fOs);
                 Snackbar.make(v, "Picture: '" + title + "' has been saved.", Snackbar.LENGTH_LONG).show();
@@ -246,9 +249,11 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
                  imgurl = img.getString("url");
                  hdurl = img.getString("hdurl");
                  title = img.getString("title");
+                 copyright = img.getString("copyright");
+                 description = img.getString("explanation");
 
-                Log.d("date", imgDate);
-                Log.d("imgurl", imgurl);
+                nasaImageInfo = new NASAImage(imgDate, imgurl, hdurl, title, copyright, description);
+
 
                 imageURL = new URL(imgurl);
 
