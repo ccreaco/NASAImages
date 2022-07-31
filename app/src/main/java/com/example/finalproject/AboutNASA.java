@@ -54,7 +54,7 @@ public class AboutNASA extends AppCompatActivity implements NavigationView.OnNav
         switch(item.getItemId()) {
 
             case R.id.savedPicturesList:
-                Intent home = new Intent(this, ImageStorage.class);
+                Intent home = new Intent(this, ImageList.class);
                 message = "Downloaded NASA images..";
                 startActivity(home);
                 break;
@@ -98,7 +98,7 @@ public class AboutNASA extends AppCompatActivity implements NavigationView.OnNav
                 message = "About NASA";
                 break;
             case R.id.image:
-                Intent images = new Intent(this, Images.class);
+                Intent images = new Intent(this, DownloadImages.class);
                 message = "Images";
                 startActivity(images);
                 break;

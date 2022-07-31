@@ -4,16 +4,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,14 +24,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class ImageStorage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ImageList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView textview;
     private Toolbar tBar;
@@ -41,6 +39,15 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
     private ListView listView;
     private ImageView imageView;
     private ArrayList<String> fileList = new ArrayList<>();
+    private SQLiteDatabase db;
+    private MyOpener myOpener = new MyOpener(this);
+    private NASAImage ns = new NASAImage();
+    private String title;
+    private String imgDate;
+    private String imgurl;
+    private String hdurl;
+    private String description;
+    private String copyright;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,34 +97,38 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
 
             String n = fileList.get(pos);
             File imgFile = new File(dir, n);
-
-            try {
-                FileInputStream input = new FileInputStream(imgFile);
-                Bitmap image = BitmapFactory.decodeStream(input);
-                imageView.setImageBitmap(image);
-                input.close();
-                Log.d("Image downloaded", "success");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        listView.setOnItemLongClickListener((p, b, pos, id) -> {
-
-            String n = fileList.get(pos);
+            loadDataFromDatabase();
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle(n)
-                    .setMessage("")
-                    .setPositiveButton("Delete", (click, arg) -> {
+            alertDialogBuilder.setTitle(title)
+                    //set message with details loaded from the database
+                    .setMessage("Title: " + title +
+                                "\nDate: " + imgDate +
+                                "\nDescription: " + description)
+
+                    //will open up a page to view the photo
+                    .setPositiveButton("OPEN", (click, arg) -> {
 
                     })
-                    .setNegativeButton("Cancel", (click, arg) -> {
+                    //will delete the photo
+                    .setNegativeButton("DELETE", (click, arg) -> {
+                        boolean dbDelete = myOpener.deleteImage(title);
+                        boolean fileDelete = imgFile.delete();
+                        if (dbDelete || fileDelete) {
+                            Snackbar.make(b, "Image: '" + title + "' has been deleted.", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            Snackbar.make(b, "Image: '" + title + "' was not deleted.", Snackbar.LENGTH_LONG).show();
+                        }
+
+                    })
+                    //will return back to main page
+                    .setNeutralButton("CANCEL", (click, arg) ->{
+
                     });
 
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
             alertDialog.getWindow().setGravity(Gravity.BOTTOM);
-            return true;
+
         });
 
 
@@ -131,7 +142,7 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()) {
 
             case R.id.savedPicturesList:
-                Intent home = new Intent(this, ImageStorage.class);
+                Intent home = new Intent(this, ImageList.class);
                 message = "Downloaded NASA images..";
                 startActivity(home);
                 break;
@@ -177,7 +188,7 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
                 startActivity(nextPage);
                 break;
             case R.id.image:
-                Intent images = new Intent(this, Images.class);
+                Intent images = new Intent(this, DownloadImages.class);
                 message = "Images";
                 startActivity(images);
                 break;
@@ -193,6 +204,35 @@ public class ImageStorage extends AppCompatActivity implements NavigationView.On
 
         Toast.makeText(this,  message, Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+
+    private void loadDataFromDatabase() {
+
+        db = myOpener.getWritableDatabase();
+        Cursor results = db.rawQuery("SELECT * FROM " + myOpener.TABLE_NAME + ";", null);
+
+        int ColIndex = results.getColumnIndex(myOpener.COL_1);
+        int titleColIndex = results.getColumnIndex(myOpener.COL_2);
+        int imgdateColIndex = results.getColumnIndex(myOpener.COL_3);
+        int imgurlColIndex = results.getColumnIndex(myOpener.COL_4);
+        int hdurlColIndex = results.getColumnIndex(myOpener.COL_5);
+        int copyrightColIndex = results.getColumnIndex(myOpener.COL_6);
+        int descriptionColIndex = results.getColumnIndex(myOpener.COL_7);
+
+        while (results.moveToNext()) {
+            long id = results.getLong(ColIndex);
+            title = results.getString(titleColIndex);
+            imgDate = results.getString(imgdateColIndex);
+            imgurl = results.getString(imgurlColIndex);
+            hdurl = results.getString(hdurlColIndex);
+            copyright = results.getString(copyrightColIndex);
+            description = results.getString(descriptionColIndex);
+
+            //ns.setTitle(title);
+        }
+
+
     }
 
 

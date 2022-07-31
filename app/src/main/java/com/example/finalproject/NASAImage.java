@@ -17,6 +17,10 @@ public class NASAImage {
         this.hdurl = hdurl;
     }
 
+    public NASAImage() {
+
+    }
+
     @Override
     public String toString() {
         return "NASAImage{" +

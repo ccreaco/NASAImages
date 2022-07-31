@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()) {
 
             case R.id.savedPicturesList:
-                Intent home = new Intent(this, ImageStorage.class);
+                Intent home = new Intent(this, ImageList.class);
                 message = "Downloaded NASA images..";
                 startActivity(home);
                 break;
@@ -133,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(nextPage);
                 break;
             case R.id.image:
-                Intent images = new Intent(this, Images.class);
+                Intent images = new Intent(this, DownloadImages.class);
                 message = "Images";
                 startActivity(images);
                 break;

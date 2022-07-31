@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,7 +46,7 @@ import java.net.URL;
 import java.util.Calendar;
 
 
-public class Images extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DownloadImages extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static Toolbar tBar;
     private static DrawerLayout drawer;
@@ -73,6 +72,8 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
     private static String description;
     private static String copyright;
     private static NASAImage nasaImageInfo;
+    private static long newID;
+    private MyOpener myOpener;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -106,6 +107,8 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+        myOpener = new MyOpener(this);
+
         saveButton.setOnClickListener(v -> {
             try {
                 File dir = getFilesDir();
@@ -113,12 +116,26 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
                 FileOutputStream fOs = openFileOutput(fileName, Context.MODE_PRIVATE);
                 nasaPic.compress(Bitmap.CompressFormat.JPEG, 80, fOs);
                 Snackbar.make(v, "Picture: '" + title + "' has been saved.", Snackbar.LENGTH_LONG).show();
+
+                Log.d("object", title + imgDate + imgurl + hdurl + copyright + description);
+
+                newID = myOpener.insertData(title, imgDate, imgurl, hdurl, copyright, description);
+
+              if (newID == -1) {
+                    Toast.makeText(DownloadImages.this, "Data not inserted", Toast.LENGTH_LONG).show();
+              } else {
+                     Toast.makeText(DownloadImages.this, "Data inserted", Toast.LENGTH_LONG).show();
+
+                }
+
                 fOs.flush();
                 fOs.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+
+
     }
 
     @Override
@@ -128,7 +145,7 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
         switch (item.getItemId()) {
 
             case R.id.savedPicturesList:
-                Intent home = new Intent(this, ImageStorage.class);
+                Intent home = new Intent(this, ImageList.class);
                 message = "Downloaded NASA images..";
                 startActivity(home);
                 break;
@@ -244,7 +261,6 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
 
                 JSONObject img = new JSONObject(results);
 
-                Log.d("object", results);
                  imgDate = img.getString("date");
                  imgurl = img.getString("url");
                  hdurl = img.getString("hdurl");
@@ -253,7 +269,6 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
                  description = img.getString("explanation");
 
                 nasaImageInfo = new NASAImage(imgDate, imgurl, hdurl, title, copyright, description);
-
 
                 imageURL = new URL(imgurl);
 
@@ -273,6 +288,8 @@ public class Images extends AppCompatActivity implements NavigationView.OnNaviga
                         e.printStackTrace();
                     }
                 }
+
+
 
             } catch (Exception e) {
                 e.printStackTrace();
