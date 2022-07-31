@@ -66,7 +66,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
     private static TextView nasaLink;
     private static TextView nasaHDUrl;
     private static String imgDate;
-    private static String imgurl ;
+    private static String imgurl;
     private static String hdurl;
     private static String title;
     private static String description;
@@ -88,8 +88,8 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
         saveButton = findViewById(R.id.saveBtn);
 
         progBar = findViewById(R.id.progressBar);
-       progBar.getProgressDrawable().setColorFilter(
-              Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
+        progBar.getProgressDrawable().setColorFilter(
+                Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
 
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
@@ -110,27 +110,43 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
         myOpener = new MyOpener(this);
 
         saveButton.setOnClickListener(v -> {
+
+            File dir = getFilesDir();
+            String fileName = title + ".jpeg";
+            File imgFile = new File(dir, fileName);
+
             try {
-                File dir = getFilesDir();
-                String fileName = title + ".jpeg";
-                FileOutputStream fOs = openFileOutput(fileName, Context.MODE_PRIVATE);
-                nasaPic.compress(Bitmap.CompressFormat.JPEG, 80, fOs);
-                Snackbar.make(v, "Picture: '" + title + "' has been saved.", Snackbar.LENGTH_LONG).show();
 
-                Log.d("object", title + imgDate + imgurl + hdurl + copyright + description);
+                //If the image already exists, then display a message
+                if (imgFile.exists()) {
 
-                newID = myOpener.insertData(title, imgDate, imgurl, hdurl, copyright, description);
+                    Snackbar.make(v, "Picture: '" + title + "' was previously saved.", Snackbar.LENGTH_LONG).show();
 
-              if (newID == -1) {
-                    Toast.makeText(DownloadImages.this, "Data not inserted", Toast.LENGTH_LONG).show();
-              } else {
-                     Toast.makeText(DownloadImages.this, "Data inserted", Toast.LENGTH_LONG).show();
+                    //If the image does not exist, then continue with saving
+                } else {
 
+                    //Creating a new file and saving it to the device file explorer
+                    FileOutputStream fOs = openFileOutput(fileName, Context.MODE_PRIVATE);
+                    nasaPic.compress(Bitmap.CompressFormat.JPEG, 80, fOs);
+                    Snackbar.make(v, "Picture: '" + title + "' has been saved.", Snackbar.LENGTH_LONG).show();
+
+                    //Adding the image details to the database
+                    newID = myOpener.insertData(title, imgDate, imgurl, hdurl, copyright, description);
+
+                    //If the image detailed are inserted into the database, display a log message
+                    if (newID == -1) {
+                        Log.d("Image Database", "Data not inserted.");
+
+                    } else {
+                        Log.d("Image Database", "Data  inserted.");
+                    }
+
+                    fOs.flush();
+                    fOs.close();
                 }
 
-                fOs.flush();
-                fOs.close();
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
         });
@@ -261,12 +277,12 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
 
                 JSONObject img = new JSONObject(results);
 
-                 imgDate = img.getString("date");
-                 imgurl = img.getString("url");
-                 hdurl = img.getString("hdurl");
-                 title = img.getString("title");
-                 copyright = img.getString("copyright");
-                 description = img.getString("explanation");
+                imgDate = img.getString("date");
+                imgurl = img.getString("url");
+                hdurl = img.getString("hdurl");
+                title = img.getString("title");
+                copyright = img.getString("copyright");
+                description = img.getString("explanation");
 
                 nasaImageInfo = new NASAImage(imgDate, imgurl, hdurl, title, copyright, description);
 
@@ -288,7 +304,6 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
                         e.printStackTrace();
                     }
                 }
-
 
 
             } catch (Exception e) {

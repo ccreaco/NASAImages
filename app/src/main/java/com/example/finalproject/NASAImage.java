@@ -32,50 +32,62 @@ public class NASAImage {
     }
 
     public String getImgDate() {
+
         return imgDate;
     }
 
     public void setImgDate(String imgDate) {
+
         this.imgDate = imgDate;
     }
 
     public String getImgurl() {
+
         return imgurl;
     }
 
     public void setImgurl(String imgurl) {
+
         this.imgurl = imgurl;
     }
 
     public String getHdurl() {
+
         return hdurl;
     }
 
     public void setHdurl(String hdurl) {
+
         this.hdurl = hdurl;
     }
 
     public String getTitle() {
+
         return title;
     }
 
     public void setTitle(String title) {
+
         this.title = title;
     }
 
     public String getCopyright() {
+
         return copyright;
     }
 
     public void setCopyright(String copyright) {
+
         this.copyright = copyright;
     }
 
     public String getDescription() {
+
         return description;
     }
 
     public void setDescription(String description) {
+
         this.description = description;
     }
 
