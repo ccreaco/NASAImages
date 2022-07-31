@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -21,11 +23,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -78,8 +80,8 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
-        SwipeRefreshLayout refresher = findViewById(R.id.refresher);
-        refresher.setOnRefreshListener( () -> refresher.setRefreshing(false)  );
+        //SwipeRefreshLayout refresher = findViewById(R.id.refresher);
+        //refresher.setOnRefreshListener( () -> refresher.setRefreshing(false)  );
 
         File dir = getFilesDir();
         File[] files = dir.listFiles();
@@ -106,6 +108,15 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
 
                     //will open up a page to view the photo
                     .setPositiveButton("OPEN", (click, arg) -> {
+
+                       try {
+                            FileInputStream input = new FileInputStream(imgFile);
+                            Bitmap image = BitmapFactory.decodeStream(input);
+                            imageView.setImageBitmap(image);
+                            input.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                     })
                     //will delete the photo
@@ -228,7 +239,7 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
             copyright = results.getString(copyrightColIndex);
             description = results.getString(descriptionColIndex);
 
-            //ns.setTitle(title);
+
         }
 
 
