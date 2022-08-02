@@ -65,11 +65,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         addBtn.setOnClickListener(v -> {
 
             nameStr = name.getText().toString();
-            editor = prefs.edit();
-            editor.putString("name", nameStr);
-            editor.commit();
-            Toast.makeText(this, "Welcome " + nameStr + "!", Toast.LENGTH_SHORT).show();
 
+            if(nameStr.equals("")) {
+                Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show();
+            } else {
+                editor = prefs.edit();
+                editor.putString("name", nameStr);
+                editor.commit();
+                Toast.makeText(this, "Welcome " + nameStr + "!", Toast.LENGTH_SHORT).show();
+            }
         });
 
         String getName = prefs.getString("name", "");
@@ -94,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.help:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle("HELP")
-                        .setMessage("TO BE EDITED")
+                        .setMessage("Please add your name to get started. Select the NASA icon to get the menu.")
                         .create()
                         .show();
                 message = "HELP is coming...";
