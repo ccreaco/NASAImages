@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,9 +32,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+
 public class ImageList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView textview;
+    private TextView emptyView;
     private Toolbar tBar;
     private DrawerLayout drawer;
     private NavigationView navView;
@@ -57,6 +60,7 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
         setContentView(R.layout.activity_image_downloads);
 
         textview = findViewById(R.id.textViewName);
+        emptyView = findViewById(R.id.empty);
         SharedPreferences sp = getApplicationContext().getSharedPreferences("Username", Context.MODE_PRIVATE);
         String name = sp.getString("name", "");
         textview.setText(name + "'s downloaded pictures");
@@ -80,8 +84,8 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
-        //SwipeRefreshLayout refresher = findViewById(R.id.refresher);
-        //refresher.setOnRefreshListener( () -> refresher.setRefreshing(false)  );
+        SwipeRefreshLayout refresher = findViewById(R.id.refresher);
+        refresher.setOnRefreshListener( () -> refresher.setRefreshing(false)  );
 
         File dir = getFilesDir();
         File[] files = dir.listFiles();
@@ -92,13 +96,16 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
 
         ArrayAdapter<String> directoryList = new ArrayAdapter<>(this, R.layout.listview_layout, fileList);
         listView.setAdapter(directoryList);
+        listView.setEmptyView(emptyView);
 
 
         listView.setOnItemClickListener((p, b, pos, id) -> {
 
             String n = fileList.get(pos);
             File imgFile = new File(dir, n);
+
             loadDataFromDatabase();
+
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle(title)
                     //set message with details loaded from the database
@@ -121,6 +128,7 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
                     })
                     //will delete the photo
                     .setNegativeButton("DELETE", (click, arg) -> {
+
                         boolean dbDelete = myOpener.deleteImage(title);
                         boolean fileDelete = imgFile.delete();
                         if (dbDelete || fileDelete) {
@@ -128,6 +136,11 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
                         } else {
                             Snackbar.make(b, "Image: '" + title + "' was not deleted.", Snackbar.LENGTH_LONG).show();
                         }
+                      directoryList.remove(n);
+                        directoryList.notifyDataSetChanged();
+
+                    imageView.setImageBitmap(null);
+
 
                     })
                     //will return back to main page

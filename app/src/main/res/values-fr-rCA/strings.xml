@@ -2,8 +2,8 @@
     <string name="app_name">NASA</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="welcome">Welcome to NASA\s Image of the Day</string>
-    <string name="welcomeinstructions">Please enter your name to get started.</string>
+    <string name="welcome">NASA\s Image of the Day</string>
+    <string name="nameHere">Please enter your name to get started</string>
     <string name="about_title">About NASA</string>
     <string name="about">The National Aeronautics and Space Administration is America’s civil space program and the global leader in space exploration. The agency has a diverse workforce of just under 18,000 civil servants, and works with many more U.S. contractors, academia, and international and commercial partners to explore, discover, and expand knowledge for the benefit of humanity. With an annual budget of $23.2 billion in Fiscal Year 2021, which is less than 0.5% of the overall U.S. federal budget, NASA supports more than 312,000 jobs across the United States, generating more than $64.3 billion in total economic output (Fiscal Year 2019).
 
@@ -17,5 +17,5 @@ NASA also leads a Moon to Mars exploration approach, which includes working with
     <string name="deleteBtn">DELETE PICTURE</string>
     <string name="images_downloaded_title">Downloaded Files</string>
     <string name="addBtn">ADD</string>
-
+    <string name="emptylist">Folder empty. Please go to the Images page to save NASA pictures.</string>
 </resources>
