@@ -80,6 +80,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images);
 
+        //Load the objects
         nasaImage = findViewById(R.id.nasaImage);
         nasaTitle = findViewById(R.id.nasaTitle);
         nasaDate = findViewById(R.id.nasaDate);
@@ -87,28 +88,36 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
         nasaHDUrl = findViewById(R.id.nasaHD);
         saveButton = findViewById(R.id.saveBtn);
 
+        //Load the progress bar and setting the color
         progBar = findViewById(R.id.progressBar);
         progBar.getProgressDrawable().setColorFilter(
                 Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
 
+        //Load the toolbar and setting the support action
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
 
+        //Load the drawer and setting the drawer listener to the action bar toggle
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, tBar, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Setting the title of the toolbar and setting it to a icon
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tBar.setNavigationIcon(R.drawable.icons8_nasa_48);
 
+        //Loading the navigation view and setting the item select listener to this activity
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+        //Creating an object of the MyOpener class
         myOpener = new MyOpener(this);
 
+        //The on click listener for the save button. This takes the current picture and saves the image to the directory.
+        //This method also inserts the details about the image into the database
         saveButton.setOnClickListener(v -> {
 
             File dir = getFilesDir();
@@ -154,6 +163,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
 
     }
 
+    //Method to select items from the toolbar with a toast message
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String message = null;
@@ -182,6 +192,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    //Method that inflates the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -192,6 +203,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
     }
 
 
+    //On click method for the navigation drawer, with a toast to display what page is next
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         String message = null;
@@ -221,6 +233,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
         return false;
     }
 
+    //DatePicker class that includes a fragment, and executes the Asynctask once a date is selected
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
@@ -251,6 +264,9 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    //AsyncTask class that opens a connection to the NASA image url, creates a string from the inputstream and
+    //creates a JSON object. Specific strings are obtained from the object and stored into variables. A connection to the date
+    //URL is then set into the inputstream and the picture is set to a Bitmap and then to the imageview.
 
     private static class NASAImages extends AsyncTask<String, Integer, Void> {
 
@@ -296,6 +312,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
 
                 nasaPic = BitmapFactory.decodeStream(inputStreamPic);
 
+                //For loop for the thread/progress of the progress bar
                 for (int i = 0; i < 100; i++) {
                     try {
                         publishProgress(i);
@@ -312,6 +329,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
             return null;
         }
 
+        //Sets the progress bar to the appropriate value
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
@@ -320,6 +338,8 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
 
         }
 
+        //Post execute sets the imagebitmap to the image obtained and sets the appropriate textviews with information about the picture,
+        //including a link to the HD url.
         @Override
         protected void onPostExecute(Void s) {
             super.onPostExecute(s);
