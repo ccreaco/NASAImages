@@ -8,6 +8,10 @@ public class NASAImage {
     private String copyright;
     private String description;
 
+    public NASAImage() {
+
+    }
+
     public NASAImage(String imgDate, String imgurl, String hdurl, String title, String copyright, String description) {
         this.copyright = copyright;
         this.imgurl = imgurl;
@@ -17,9 +21,6 @@ public class NASAImage {
         this.hdurl = hdurl;
     }
 
-    public NASAImage() {
-
-    }
 
     @Override
     public String toString() {

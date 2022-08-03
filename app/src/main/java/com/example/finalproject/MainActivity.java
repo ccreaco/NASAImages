@@ -42,30 +42,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        name = findViewById(R.id.editText);
+        //Load the objects
         addBtn = findViewById(R.id.addBtn);
 
-
+        //Load the name object and setting the edit text to white
+        name = findViewById(R.id.editText);
         name.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
+        //Load the toolbar and setting the support action
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
 
+        //Load the drawer and setting the drawer listener to the action bar toggle
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, tBar, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Setting the title of the toolbar and setting it to a icon
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tBar.setNavigationIcon(R.drawable.icons8_nasa_48);
 
+        //Loading the navigation view and setting the item select listener to this activity
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+        //Getting the shared preferences information
         prefs = this.getSharedPreferences("Username", Context.MODE_PRIVATE);
 
+        /*
+        The add button will get the name from the edit text and set it to a string.
+        If the string is empty, it will not saved to shared preferences and post a toast
+        message asking to enter your name.
+        If the string is not blank, it will save the name to shared preferences, and post a toast
+        message welcoming the user with the name.
+        */
         addBtn.setOnClickListener(v -> {
 
             nameStr = name.getText().toString();
@@ -80,6 +93,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        /*
+        If there is already a name saved in shared preferences, then the edit text will display
+        a welcome message with the persons name received from shared preferences.
+        */
         String getName = prefs.getString("name", "");
 
         if(getName != "") {
@@ -88,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    //Method to select items from the toolbar with a toast message
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String message = null;
@@ -114,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    //Method that inflates the toolbar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -123,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
+    //On click method for the navigation drawer, with a toast to display what page is next
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         String message = null;
