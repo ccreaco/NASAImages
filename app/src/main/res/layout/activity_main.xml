@@ -27,23 +27,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/welcome"
+                android:textColor="@color/white"
                 android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
+                android:textStyle="bold" />
 
 
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:hint="@string/nameHere"/>
+                android:inputType="text"
+                android:minWidth="32dp"
+                android:minHeight="48dp"
+                android:textColor="@color/white" />
 
             <Button
+                android:id="@+id/addBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/addBtn"
-                android:text="@string/addBtn"/>
+                android:text="@string/addBtn" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/homepageText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/homepageText"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        />
+
+
+</LinearLayout>
+
+
+
 
         </LinearLayout>
 
