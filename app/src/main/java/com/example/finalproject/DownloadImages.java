@@ -48,6 +48,7 @@ import java.util.Calendar;
 
 public class DownloadImages extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Declaring all required variables
     private static Toolbar tBar;
     private static DrawerLayout drawer;
     private static NavigationView navView;
@@ -192,7 +193,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
         return true;
     }
 
-    //Method that inflates the toolbar
+    //Method that inflates the toolbar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 

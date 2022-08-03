@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class AboutNASA extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Declaring all required variables
     private Toolbar tBar;
     private DrawerLayout drawer;
     private NavigationView navView;
@@ -29,24 +30,29 @@ public class AboutNASA extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        //Load the toolbar and setting the support action
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
 
+        //Load the drawer and setting the drawer listener to the action bar toggle
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, tBar, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Setting the title of the toolbar and setting it to a icon
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        tBar.setNavigationIcon(R.drawable.icons8_nasa_48);
 
+        //Loading the navigation view and setting the item select listener to this activity
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
     }
 
+    //Method to select items from the toolbar with a toast message
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String message = null;
@@ -73,6 +79,7 @@ public class AboutNASA extends AppCompatActivity implements NavigationView.OnNav
         return true;
     }
 
+    //Method that inflates the toolbar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -82,7 +89,7 @@ public class AboutNASA extends AppCompatActivity implements NavigationView.OnNav
         return true;
     }
 
-
+    //On click method for the navigation drawer, with a toast to display what page is next
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         String message = null;

@@ -35,6 +35,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ImageList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Declaring all required variables
     private TextView textview;
     private TextView emptyView;
     private Toolbar tBar;
@@ -59,34 +60,42 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_downloads);
 
+        //Load the objects
         textview = findViewById(R.id.textViewName);
         emptyView = findViewById(R.id.empty);
+        listView = findViewById(R.id.image_list);
+        imageView = findViewById(R.id.image_download);
+
+        //Getting the text that is saved in shared preferences and setting it to the textview
         SharedPreferences sp = getApplicationContext().getSharedPreferences("Username", Context.MODE_PRIVATE);
         String name = sp.getString("name", "");
         textview.setText(name + "'s downloaded pictures");
 
-        listView = findViewById(R.id.image_list);
-        imageView = findViewById(R.id.image_download);
-
+        //Load the toolbar and setting the support action
         tBar = findViewById(R.id.toolbar);
         setSupportActionBar(tBar);
 
+        //Load the drawer and setting the drawer listener to the action bar toggle
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, tBar, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Setting the title of the toolbar and setting it to a icon
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tBar.setNavigationIcon(R.drawable.icons8_nasa_48);
 
+        //Loading the navigation view and setting the item select listener to this activity
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+        //Setting the swipe refresh to the layout
         SwipeRefreshLayout refresher = findViewById(R.id.refresher);
         refresher.setOnRefreshListener( () -> refresher.setRefreshing(false)  );
 
+        //Getting the files list from the directory and adding it to an array
         File dir = getFilesDir();
         File[] files = dir.listFiles();
         String[] getFiles = new String[fileList().length];
@@ -94,10 +103,19 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
             fileList.add(getFiles[i] = files[i].getName());
         }
 
+        //An array adapter that will take in the filesList array and set it to the list view
+        //The emptyview will set a specific text if the list is empty.
         ArrayAdapter<String> directoryList = new ArrayAdapter<>(this, R.layout.listview_layout, fileList);
         listView.setAdapter(directoryList);
         listView.setEmptyView(emptyView);
 
+        /*
+        On item click listener for the listview that will allow a user to open a picture,
+        or delete a picture. When an item is selected an alert dialog box will populate and display
+        the information about the picture that was saved to the database.
+        When a picture is deleted, it will be deleted from the directory as well as the information,
+        from the database will be removed.
+        */
 
         listView.setOnItemClickListener((p, b, pos, id) -> {
 
@@ -157,7 +175,7 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
 
     }
 
-
+    //Method to select items from the toolbar with a toast message
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String message = null;
@@ -184,6 +202,7 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
         return true;
     }
 
+    //Method that inflates the toolbar menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -193,7 +212,7 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
         return true;
     }
 
-
+    //On click method for the navigation drawer, with a toast to display what page is next
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         String message = null;
@@ -229,7 +248,10 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
         return false;
     }
 
-
+    /*
+    Method that calls the myOpener class, gets a connection to the database,
+    then gets all of the information from the database and saves them to variables.
+     */
     private void loadDataFromDatabase() {
 
         db = myOpener.getWritableDatabase();
