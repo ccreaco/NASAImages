@@ -18,4 +18,22 @@ NASA also leads a Moon to Mars exploration approach, which includes working with
     <string name="addBtn">ADD NAME</string>
     <string name="emptylist">Folder empty. Please go to the Images page to save NASA pictures.</string>
     <string name="homepageText">Discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional.</string>
+    <string name="downloadNASAImages">Downloaded NASA images..</string>
+    <string name="HELP">HELP is coming...</string>
+    <string name="HELPTITLE">HELP</string>
+    <string name="help_about">This is the ABOUT NASA page. To download an image, please select the NASA icon and then Images.</string>
+    <string name="home_toast">Home</string>
+    <string name="about_nasa_toast">About NASA</string>
+    <string name="images_toast">Images</string>
+    <string name="exit_toast">Goodbye</string>
+    <string name="help_download">In order to select a picture, please click the date button and click the desired date. The picture and it/s details will populate. If you/d like to save a copy of this picture, please select the Save Picture button. To view saved pictures, click the downloaded folder in the top right next to the HELP icon.</string>
+    <string name="download_saved_end">/ has been saved.</string>
+    <string name="picture_title">Picture: /</string>
+    <string name="prev_download_end">/ was previously saved.</string>
+    <string name="help_imagelist">The list below are the downloaded pictures. Click a picture to view! A prompt will ask if you/d like to delete a picture.</string>
+    <string name="delete">DELETE</string>
+    <string name="delete_success">/ has been deleted.</string>
+    <string name="delete_failed">/ is unable to be deleted.</string>
+    <string name="CANCEL">CANCEL</string>
+    <string name="help_home">Please add your name to get started. Select the NASA icon to get the menu.</string>
 </resources>

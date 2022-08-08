@@ -61,16 +61,16 @@ public class AboutNASA extends AppCompatActivity implements NavigationView.OnNav
 
             case R.id.savedPicturesList:
                 Intent home = new Intent(this, ImageList.class);
-                message = "Downloaded NASA images..";
+                message = getString(R.string.downloadNASAImages);
                 startActivity(home);
                 break;
             case R.id.help:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("HELP")
-                        .setMessage("This is the ABOUT NASA page. To download an image, please select the NASA icon and then Images.")
+                alertDialogBuilder.setTitle(getString(R.string.HELPTITLE))
+                        .setMessage(getString(R.string.help_about))
                         .create()
                         .show();
-                message = "HELP is coming...";
+                message = getString(R.string.HELP);
                 break;
         }
 
@@ -98,19 +98,21 @@ public class AboutNASA extends AppCompatActivity implements NavigationView.OnNav
         {
             case R.id.home:
                 Intent nextPage = new Intent(this, MainActivity.class);
-                message = "Home";
+                message = getString(R.string.home_toast);
                 startActivity(nextPage);
                 break;
             case R.id.about:
-                message = "About NASA";
+                message = getString(R.string.about_nasa_toast);
+                Intent aboutPage = new Intent(this, AboutNASA.class);
+                startActivity(aboutPage);
                 break;
             case R.id.image:
                 Intent images = new Intent(this, DownloadImages.class);
-                message = "Images";
+                message = getString(R.string.images_toast);
                 startActivity(images);
                 break;
             case R.id.exit:
-                message = "Goodbye";
+                message = getString(R.string.exit_toast);
                 finishAffinity();
                 break;
 

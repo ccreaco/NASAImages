@@ -132,7 +132,7 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
                                 "\nDescription: " + description)
 
                     //will open up a page to view the photo
-                    .setPositiveButton("OPEN", (click, arg) -> {
+                    .setPositiveButton(getString(R.string.open), (click, arg) -> {
 
                        try {
                             FileInputStream input = new FileInputStream(imgFile);
@@ -145,14 +145,14 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
 
                     })
                     //will delete the photo
-                    .setNegativeButton("DELETE", (click, arg) -> {
+                    .setNegativeButton(getString(R.string.delete), (click, arg) -> {
 
                         boolean dbDelete = myOpener.deleteImage(title);
                         boolean fileDelete = imgFile.delete();
                         if (dbDelete || fileDelete) {
-                            Snackbar.make(b, "Image: '" + title + "' has been deleted.", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(b, getString(R.string.picture_title) + title + getString(R.string.delete_success), Snackbar.LENGTH_LONG).show();
                         } else {
-                            Snackbar.make(b, "Image: '" + title + "' was not deleted.", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(b, getString(R.string.picture_title) + title + getString(R.string.delete_failed), Snackbar.LENGTH_LONG).show();
                         }
                       directoryList.remove(n);
                         directoryList.notifyDataSetChanged();
@@ -162,7 +162,7 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
 
                     })
                     //will return back to main page
-                    .setNeutralButton("CANCEL", (click, arg) ->{
+                    .setNeutralButton(getString(R.string.CANCEL), (click, arg) ->{
 
                     });
 
@@ -184,16 +184,16 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
 
             case R.id.savedPicturesList:
                 Intent home = new Intent(this, ImageList.class);
-                message = "Downloaded NASA images..";
+                message = getString(R.string.downloadNASAImages);
                 startActivity(home);
                 break;
             case R.id.help:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("HELP")
-                        .setMessage("The list below are the downloaded pictures. Click a picture to view! A prompt will ask if you'd like to delete a picture. ")
+                alertDialogBuilder.setTitle(getString(R.string.HELPTITLE))
+                        .setMessage(getString(R.string.help_imagelist))
                         .create()
                         .show();
-                message = "HELP is coming...";
+                message = getString(R.string.HELP);
                 break;
         }
 
@@ -220,22 +220,22 @@ public class ImageList extends AppCompatActivity implements NavigationView.OnNav
         switch(item.getItemId())
         {
             case R.id.home:
-                Intent home = new Intent(this, MainActivity.class);
-                message = "Home";
-                startActivity(home);
+                Intent nextPage = new Intent(this, MainActivity.class);
+                message = getString(R.string.home_toast);
+                startActivity(nextPage);
                 break;
             case R.id.about:
-                Intent nextPage = new Intent(this, AboutNASA.class);
-                message = "About NASA";
-                startActivity(nextPage);
+                message = getString(R.string.about_nasa_toast);
+                Intent aboutPage = new Intent(this, AboutNASA.class);
+                startActivity(aboutPage);
                 break;
             case R.id.image:
                 Intent images = new Intent(this, DownloadImages.class);
-                message = "Images";
+                message = getString(R.string.images_toast);
                 startActivity(images);
                 break;
             case R.id.exit:
-                message = "Goodbye";
+                message = getString(R.string.exit_toast);
                 finishAffinity();
                 break;
 

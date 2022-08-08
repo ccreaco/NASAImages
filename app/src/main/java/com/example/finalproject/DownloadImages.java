@@ -130,7 +130,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
                 //If the image already exists, then display a message
                 if (imgFile.exists()) {
 
-                    Snackbar.make(v, "Picture: '" + title + "' was previously saved.", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, getString(R.string.picture_title) +  title + getString(R.string.prev_download_end), Snackbar.LENGTH_LONG).show();
 
                     //If the image does not exist, then continue with saving
                 } else {
@@ -138,7 +138,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
                     //Creating a new file and saving it to the device file explorer
                     FileOutputStream fOs = openFileOutput(fileName, Context.MODE_PRIVATE);
                     nasaPic.compress(Bitmap.CompressFormat.JPEG, 80, fOs);
-                    Snackbar.make(v, "Picture: '" + title + "' has been saved.", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, getString(R.string.picture_title) + title + getString(R.string.download_saved_end), Snackbar.LENGTH_LONG).show();
 
                     //Adding the image details to the database
                     newID = myOpener.insertData(title, imgDate, imgurl, hdurl, copyright, description);
@@ -173,18 +173,16 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
 
             case R.id.savedPicturesList:
                 Intent home = new Intent(this, ImageList.class);
-                message = "Downloaded NASA images..";
+                message = getString(R.string.downloadNASAImages);
                 startActivity(home);
                 break;
             case R.id.help:
-
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("HELP")
-                        .setMessage("In order to select a picture, please click the date button and click the desired date. The picture and it's details will populate. If you'd like to save a copy of this picture, please select the 'Save Picture' button. To view saved pictures, click the downloaded folder in the top right next to the HELP icon.")
+                alertDialogBuilder.setTitle(getString(R.string.HELPTITLE))
+                        .setMessage(getString(R.string.help_download))
                         .create()
                         .show();
-
-                message = "HELP is coming...";
+                message = getString(R.string.HELP);
                 break;
         }
 
@@ -211,17 +209,20 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
 
         switch (item.getItemId()) {
             case R.id.home:
-                Intent home = new Intent(this, MainActivity.class);
-                message = "Home";
-                startActivity(home);
+                Intent nextPage = new Intent(this, MainActivity.class);
+                message = getString(R.string.home_toast);
+                startActivity(nextPage);
                 break;
             case R.id.about:
-                Intent NASA = new Intent(this, AboutNASA.class);
-                message = "About NASA";
-                startActivity(NASA);
+                message = getString(R.string.about_nasa_toast);
+                break;
+            case R.id.image:
+                Intent images = new Intent(this, DownloadImages.class);
+                message = getString(R.string.images_toast);
+                startActivity(images);
                 break;
             case R.id.exit:
-                message = "Goodbye";
+                message = getString(R.string.exit_toast);
                 finishAffinity();
                 break;
 
@@ -253,7 +254,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             selectedDate = year + "-" + month + "-" + day;
-            Log.d("selectedDate", selectedDate);
+            //Log.d("selectedDate", selectedDate);
             NASAImages nasaImages = new NASAImages();
             nasaImages.execute(NASAURL + selectedDate);
 
@@ -348,7 +349,7 @@ public class DownloadImages extends AppCompatActivity implements NavigationView.
             nasaDate.setText("Date: " + imgDate);
             nasaTitle.setText(title);
             nasaLink.setText("URL: " + imgurl);
-            nasaHDUrl.setText("Click here to see the HD picture online: " + hdurl);
+            nasaHDUrl.setText("HD URL" + hdurl);
         }
     }
 }

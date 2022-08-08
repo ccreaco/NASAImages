@@ -1,21 +1,41 @@
 <resources>
     <string name="app_name">NASA</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
-    <string name="welcome">Image of the Day</string>
-    <string name="about_title">About NASA</string>
-    <string name="about">The National Aeronautics and Space Administration is America’s civil space program and the global leader in space exploration. The agency has a diverse workforce of just under 18,000 civil servants, and works with many more U.S. contractors, academia, and international and commercial partners to explore, discover, and expand knowledge for the benefit of humanity. With an annual budget of $23.2 billion in Fiscal Year 2021, which is less than 0.5% of the overall U.S. federal budget, NASA supports more than 312,000 jobs across the United States, generating more than $64.3 billion in total economic output (Fiscal Year 2019).
-
-At its 20 centers and facilities across the country – and the only National Laboratory in space – NASA studies Earth, including its climate, our Sun, and our solar system and beyond. We conduct research, testing, and development to advance aeronautics, including electric propulsion and supersonic flight. We develop and fund space technologies that will enable future exploration and benefit life on Earth.
-
-NASA also leads a Moon to Mars exploration approach, which includes working with U.S. industry, international partners, and academia to develop new technology, and send science research and soon humans to explore the Moon on Artemis missions that will help prepare for human exploration of the Red Planet. In addition to those major missions, the agency shares what it learns so that its information can make life better for people worldwide. For example, companies use NASA discoveries and technologies to create new products for the public. To ensure future success for the agency and the nation, NASA also supports education efforts in STEM with an emphasis on increasing diversity in our future workforce.</string>
-    <string name="images_title">NASA Images</string>
-    <string name="images_description">Please select a date using the button below to see a picture.</string>
+    <string name="open">Ouvert</string>
+    <string name="close">Proche</string>
+    <string name="welcome">Image du jour</string>
+    <string name="about_title">À propos de la NASA</string>
+    <string name="about">La National Aeronautics and Space Administration est le programme spatial civil américain et le leader mondial de l/exploration spatiale. L/agence compte un effectif diversifié d/un peu moins de 18 000 fonctionnaires et travaille avec de nombreux autres entrepreneurs américains, universités et partenaires internationaux et commerciaux pour explorer, découvrir et élargir les connaissances au profit de l/humanité. Avec un budget annuel de 23,2 milliards de dollars pour l/exercice 2021, soit moins de 0,5 % du budget fédéral américain global, la NASA soutient plus de 312 000 emplois aux États-Unis, générant plus de 64,3 milliards de dollars de production économique totale (exercice 2019) .
+</string>
+    <string name="images_title">Images de la NASA
+</string>
+    <string name="images_description">Veuillez sélectionner une date en utilisant le bouton ci-dessous pour voir une photo.</string>
     <string name="date_picker">Date</string>
-    <string name="saveBtn">SAVE PICTURE</string>
-    <string name="deleteBtn">DELETE PICTURE</string>
-    <string name="images_downloaded_title">Downloaded Files</string>
-    <string name="addBtn">ADD NAME</string>
-    <string name="emptylist">Folder empty. Please go to the Images page to save NASA pictures.</string>
-    <string name="homepageText">Discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional.</string>
+    <string name="saveBtn">ENREGISTRER L/IMAGE
+</string>
+    <string name="deleteBtn">SUPPRIMER L/IMAGE</string>
+    <string name="images_downloaded_title">Fichiers téléchargés
+</string>
+    <string name="addBtn">AJOUTER NOM</string>
+    <string name="emptylist">Dossier vide. Veuillez vous rendre sur la page Images pour enregistrer les images de la NASA.
+</string>
+    <string name="homepageText">Découvrez le cosmos ! Chaque jour, une image ou une photographie différente de notre univers fascinant est présentée, accompagnée d/une brève explication rédigée par un professionnel.
+</string>
+    <string name="downloadNASAImages">Images de la NASA téléchargées..</string>
+    <string name="HELP">L/AIDE arrive</string>
+    <string name="HELPTITLE">AIDER</string>
+    <string name="help_about">Ceci est la page À PROPOS DE LA NASA. Pour télécharger une image, veuillez sélectionner l/icône NASA puis Images.</string>
+    <string name="home_toast">DOMICILE</string>
+    <string name="about_nasa_toast">À propos de la NASA</string>
+    <string name="images_toast">Images</string>
+    <string name="exit_toast">Au revoir</string>
+    <string name="help_download">Pour sélectionner une image, veuillez cliquer sur le bouton de la date et cliquez sur la date souhaitée. L/image et ses détails s/afficheront. Si vous souhaitez enregistrer une copie de cette image, veuillez sélectionner le bouton Enregistrer l/image. Pour afficher les images enregistrées, cliquez sur le dossier téléchargé en haut à droite à côté de l/icône AIDE.</string>
+    <string name="download_saved_end">/ a été enregistré.</string>
+    <string name="picture_title">Image: /</string>
+    <string name="prev_download_end">/ a été précédemment enregistré.</string>
+    <string name="help_imagelist">La liste ci-dessous sont les images téléchargées. Cliquez sur une image pour voir! Une invite vous demandera si vous souhaitez supprimer une image.</string>
+    <string name="delete">EFFACER</string>
+    <string name="delete_success">/ a été supprimé.</string>
+    <string name="delete_failed">/ ne peut pas être supprimé.</string>
+    <string name="CANCEL">ANNULER</string>
+    <string name="help_home">Veuillez ajouter votre nom pour commencer. Sélectionnez l/icône NASA pour accéder au menu.</string>
 </resources>
