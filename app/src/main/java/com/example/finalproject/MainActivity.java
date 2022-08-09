@@ -84,12 +84,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             nameStr = name.getText().toString();
 
             if(nameStr.equals("")) {
-                Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.entername), Toast.LENGTH_SHORT).show();
             } else {
                 editor = prefs.edit();
                 editor.putString("name", nameStr);
                 editor.commit();
-                Toast.makeText(this, "Welcome " + nameStr + "!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.welcomesp) + " " + nameStr + "!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String getName = prefs.getString("name", "");
 
         if(getName != "") {
-            name.setText("Welcome back " + getName + "!");
+            name.setText(getString(R.string.welcomebck) + " " + getName + "!");
         }
 
     }
