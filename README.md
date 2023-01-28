@@ -19,5 +19,7 @@ The application utilizes the following components:
 - Android fragments and drawers for opening different pages within the application. 
 - Connection to MySQL database to insert the data from the images such as the date, title, URL, etc.  
 - Dialogs and toast messages to alert the users of their selection within the application, such as confirmation a picture was saved.  
+- SharedPreferences to save the users information and use it on other pages withint the application. 
 - AsyncTask to open an Http URL Connection to the NASA website to read the image information into a JSON object to be utilized with the application.  
-- Android UI elements such as Buttons, ListViews, ImageViews, Adapters, Toolbars, Menus, etc. 
+- Android UI elements such as Buttons, ListViews, ImageViews, Adapters, Toolbars, Menus, Snackbars, Progress Bars, etc. 
+- Application supports both English and French. 
